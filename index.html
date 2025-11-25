@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Pilot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Landing Page -->
+    <div id="landing-page" class="container mx-auto px-4 py-12">
+        <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-8">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-bold text-blue-600 mb-6">Communication Intelligence Hub</h1>
+                <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Elevate your client communications with AI-powered conversation intelligence
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-comments text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Smart Communication Analysis</h3>
+                    <p class="text-gray-600">Transform email threads and voice notes into actionable insights with our advanced AI analysis.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-tasks text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Automated Action Plans</h3>
+                    <p class="text-gray-600">Generate comprehensive action plans and professional email responses instantly.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-chart-line text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Performance Insights</h3>
+                    <p class="text-gray-600">Get personalized feedback and tips to improve your communication effectiveness.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-sync text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Streamlined Workflow</h3>
+                    <p class="text-gray-600">Seamlessly coordinate between client and internal team communications.</p>
+                </div>
+            </div>
+            <div class="text-center mt-8 mx-auto block">
+                <button id="begin-btn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors ">
+                    Begin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (Initially Hidden) -->
+    <div id="main-app" class="container mx-auto px-4 py-12 hidden">
+        <div class="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-blue-600 mb-4">Communication Intelligence Hub</h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Transform your conversations into strategic action plans with AI-powered analysis
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Email Thread Upload -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <div class="space-y-4">
+                        <div class="text-gray-600">
+                            <i class="fas fa-file-alt text-3xl mb-2"></i>
+                            <h3 class="text-lg font-semibold">Email Thread</h3>
+                        </div>
+                        <input type="file" id="email-file" accept=".txt" class="hidden">
+                        <button onclick="document.getElementById('email-file').click()" 
+                                class="bg-blue-100 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-200 transition-colors">
+                            Upload .txt file
+                        </button>
+                        <p id="email-file-name" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+
+                <!-- Voice Note/Transcript Upload -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <div class="space-y-4">
+                        <div class="text-gray-600">
+                            <i class="fas fa-microphone text-3xl mb-2"></i>
+                            <h3 class="text-lg font-semibold">Voice Recording or Transcript</h3>
+                            <p class="text-sm text-gray-500 mt-1">Upload either an audio file or transcript</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <input type="file" id="audio-file" accept=".mp3" class="hidden">
+                                <button onclick="document.getElementById('audio-file').click()" 
+                                        class="bg-blue-100 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-200 transition-colors w-full">
+                                    Upload .mp3 file
+                                </button>
+                            </div>
+                            <div class="text-gray-500">- or -</div>
+                            <div>
+                                <input type="file" id="transcript-file" accept=".txt" class="hidden">
+                                <button onclick="document.getElementById('transcript-file').click()" 
+                                        class="bg-blue-100 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-200 transition-colors w-full">
+                                    Upload transcript (.txt)
+                                </button>
+                            </div>
+                        </div>
+                        <p id="audio-file-name" class="text-sm text-gray-500"></p>
+                        <p id="transcript-file-name" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Button -->
+            <div class="text-center mt-8">
+                <button id="process-btn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400" disabled>
+                    Process Files
+                </button>
+            </div>
+
+            <!-- Results Section (Initially Hidden) -->
+            <div id="results-section" class="mt-12 hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- First Row: Transcript and Action Plan -->
+                    <div id="transcript-section" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow h-[500px] flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-file-alt text-blue-600 text-xl mr-3"></i>
+                            <h3 class="text-xl font-semibold">Transcript</h3>
+                        </div>
+                        <div id="transcript-content" class="text-gray-600 prose max-w-none overflow-y-auto flex-grow p-6 bg-gray-50 rounded-lg text-base leading-relaxed"></div>
+                    </div>
+                    
+                    <div id="action-plan-section" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow h-[500px] flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-tasks text-blue-600 text-xl mr-3"></i>
+                            <h3 class="text-xl font-semibold">Action Plan</h3>
+                        </div>
+                        <div id="action-plan-content" class="text-gray-600 prose max-w-none overflow-y-auto flex-grow p-6 bg-gray-50 rounded-lg text-base leading-relaxed"></div>
+                    </div>
+                    
+                    <!-- Second Row: Emails -->
+                    <div id="client-email-section" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow h-[500px] flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-blue-600 text-xl mr-3"></i>
+                                <h3 class="text-xl font-semibold">Client Email</h3>
+                            </div>
+                            <button class="copy-btn text-blue-600 hover:text-blue-800 flex items-center gap-2" data-target="client-email-content">
+                                <i class="fas fa-copy"></i>
+                                <span class="text-sm">Copy</span>
+                            </button>
+                        </div>
+                        <div id="client-email-content" class="text-gray-600 prose max-w-none overflow-y-auto flex-grow p-6 bg-gray-50 rounded-lg text-base leading-relaxed"></div>
+                    </div>
+                    
+                    <div id="internal-email-section" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow h-[500px] flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-blue-600 text-xl mr-3"></i>
+                                <h3 class="text-xl font-semibold">Internal Email</h3>
+                            </div>
+                            <button class="copy-btn text-blue-600 hover:text-blue-800 flex items-center gap-2" data-target="internal-email-content">
+                                <i class="fas fa-copy"></i>
+                                <span class="text-sm">Copy</span>
+                            </button>
+                        </div>
+                        <div id="internal-email-content" class="text-gray-600 prose max-w-none overflow-y-auto flex-grow p-6 bg-gray-50 rounded-lg text-base leading-relaxed"></div>
+                    </div>
+                    
+                    <!-- Third Row: Review (Full Width) -->
+                    <div id="review-section" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow col-span-1 lg:col-span-2 h-[500px] flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-blue-600 text-xl mr-3"></i>
+                            <h3 class="text-xl font-semibold">Conversation Analysis & Tips</h3>
+                        </div>
+                        <div id="review-content" class="text-gray-600 prose max-w-none overflow-y-auto flex-grow p-6 bg-gray-50 rounded-lg text-base leading-relaxed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-semibold">LLM Settings</h3>
+                <button onclick="toggleSettingsModal(false)" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label for="llm-baseurl" class="block text-sm font-medium text-gray-700 mb-1">Base URL</label>
+                    <input type="text" id="llm-baseurl" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                           placeholder="Enter your Base URL">
+                </div>
+                <div>
+                    <label for="llm-token" class="block text-sm font-medium text-gray-700 mb-1">API Token</label>
+                    <input type="password" id="llm-token" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                           placeholder="Enter your API token">
+                </div>
+                <button onclick="saveLLMSettings()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    Save Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Button -->
+    <button id="settings-btn" onclick="toggleSettingsModal(true)" 
+            class="fixed bottom-6 right-6 bg-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all text-blue-600 hover:text-blue-800 hover:scale-110">
+        <i class="fas fa-cog text-2xl"></i>
+        <span class="sr-only">Settings</span>
+    </button>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
