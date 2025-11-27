@@ -77,7 +77,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**GitHub Description**:
-```
-🤖 AI-powered communication assistant that transforms email threads and voice recordings into actionable insights. Generate professional action plans, emails, and receive personalized communication tips automatically.
-```

@@ -1,0 +1,121 @@
+Subject: Quick intro, accelerating NC-217 in vivo readouts for your January gate
+
+From: Maya Patel [maya.patel@crl.com](mailto:maya.patel@crl.com)
+To: Dr. Li Chen [li.chen@novacura.bio](mailto:li.chen@novacura.bio)
+Date: Fri, Nov 7, 2025, 9:06 AM ET
+
+Hi Dr. Chen,
+
+I am Maya Patel from Charles River. I lead oncology discovery services. We work with several biotech teams in late lead optimization to run rapid xenograft efficacy packages and, when needed, parallel non-GLP tolerability to de-risk IND plans.
+
+I saw NovaCura recently hired a translational lead for oncology and assumed NC-217 may be approaching in vivo confirmation. If you are planning a January decision gate, we can usually deliver first tumor growth readouts in a 6 to 8 week window from compound receipt, with biomarker add-ons like pERK and Ki-67.
+
+If helpful, I can share a 1-page outline of a typical scope and timeline.
+
+Best,
+Maya Patel
+Director, Oncology Discovery Services
+Charles River Laboratories
+
+---
+
+Subject: Re: Quick intro, accelerating NC-217 in vivo readouts for your January gate
+
+From: Dr. Li Chen [li.chen@novacura.bio](mailto:li.chen@novacura.bio)
+To: Maya Patel [maya.patel@crl.com](mailto:maya.patel@crl.com)
+Date: Fri, Nov 7, 2025, 1:18 PM ET
+
+Hi Maya,
+
+We are evaluating partners for NC-217 in vivo work.
+Send the outline.
+
+Li
+
+---
+
+Subject: Re: Quick intro, accelerating NC-217 in vivo readouts for your January gate
+
+From: Maya Patel [maya.patel@crl.com](mailto:maya.patel@crl.com)
+To: Dr. Li Chen [li.chen@novacura.bio](mailto:li.chen@novacura.bio)
+Date: Fri, Nov 7, 2025, 2:03 PM ET
+
+Hi Dr. Chen,
+
+Thanks. Here is a concise outline so you can see if this aligns (happy to refine on a call):
+
+Proposed efficacy package (non-GLP):
+
+* 2 xenograft models (often colorectal plus a lung or other solid tumor model).
+* 3 arms per model (vehicle, low, high), typically 8 to 10 animals per arm.
+* Endpoints: tumor growth inhibition, survival as needed.
+* Biomarkers: pERK and Ki-67 IHC with digital image analysis (optional tissue banking for future RNA-seq).
+* Interim weekly data drops, final integrated report.
+
+Typical timing (from compound receipt):
+
+* Model prep: ~2 weeks
+* On-study and first readouts: 4 to 6 weeks
+* Total to first data: 6 to 8 weeks
+
+Optional early safety (if board wants de-risking before GLP tox):
+
+* 7-day non-GLP rat dose range finding (DSA group), can run in parallel to efficacy.
+
+To tailor this, I need a few quick data points:
+
+1. Which two models are you leaning toward?
+2. Any fixed endpoints beyond tumor volumes (e.g., pERK, Ki-67 confirmed)?
+3. When could you ship compound?
+4. Are you thinking DRF now or only after efficacy?
+
+If it is easier, we can cover in a 30 min discovery call next week.
+
+Best,
+Maya
+
+---
+
+Subject: Re: Quick intro, accelerating NC-217 in vivo readouts for your January gate
+
+From: Dr. Li Chen [li.chen@novacura.bio](mailto:li.chen@novacura.bio)
+To: Maya Patel [maya.patel@crl.com](mailto:maya.patel@crl.com)
+Date: Mon, Nov 10, 2025, 8:32 AM ET
+
+Hi Maya,
+
+High level:
+
+* Two models: a colorectal xenograft we have used before, plus a PD-L1 high lung cancer model (newer for us).
+* Endpoints: tumor growth inhibition, pERK and Ki-67. If you can run IHC and analysis, that helps.
+* Timeline: first readouts in ~6 to 8 weeks. We have a go/no-go end of January tied to IND plans for early Q2 next year.
+* Compound: batch release this Friday, can ship early next week.
+* Early safety: board is asking for a short non-GLP rat tolerability / DRF in parallel if feasible, but efficacy is priority.
+* Budget expectation for efficacy (incl biomarkers): USD 250K to 300K. We are also speaking to WuXi and Labcorp for comparison.
+
+We should talk.
+
+Li
+
+---
+
+Subject: Re: Quick intro, accelerating NC-217 in vivo readouts for your January gate
+
+From: Maya Patel [maya.patel@crl.com](mailto:maya.patel@crl.com)
+To: Dr. Li Chen [li.chen@novacura.bio](mailto:li.chen@novacura.bio)
+Date: Mon, Nov 10, 2025, 9:11 AM ET
+
+Hi Dr. Chen,
+
+This is exactly the kind of program we can support, and your timeline is workable if we receive compound next week. We will come prepared to address:
+
+* implantation consistency for the PD-L1 high lung model
+* keeping first readouts inside your January gate
+* pricing in your expected range, with an optional parallel DRF scenario
+
+Let’s do a 30 to 40 min discovery call to finalize scope and timeline. I can also bring a discovery biology lead to confirm model selection and QC details.
+
+Does Thu Nov 13 at 11:00 AM ET work? If not, send a couple of slots and I will adjust.
+
+Best,
+Maya Patel

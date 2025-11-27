@@ -74,102 +74,569 @@ document.addEventListener('click', async function(event) {
 // DOM Elements
 const landingPage = document.getElementById('landing-page');
 const mainApp = document.getElementById('main-app');
-const beginBtn = document.getElementById('begin-btn');
-const emailFileInput = document.getElementById('email-file');
-const audioFileInput = document.getElementById('audio-file');
-const transcriptFileInput = document.getElementById('transcript-file');
-const emailFileName = document.getElementById('email-file-name');
-const audioFileName = document.getElementById('audio-file-name');
-const transcriptFileName = document.getElementById('transcript-file-name');
-const processBtn = document.getElementById('process-btn');
-const resultsSection = document.getElementById('results-section');
+const getStartedBtn = document.getElementById('get-started-btn');
+
+// File Selection Elements
+const selectEmailBtn = document.getElementById('select-email-btn');
+const selectRecordingBtn = document.getElementById('select-recording-btn');
+const emailFileStatus = document.getElementById('email-file-status');
+const downloadCsvBtn = document.getElementById('download-csv');
+
+// Action Buttons
+const generatePlanBtn = document.getElementById('generate-plan-btn');
+const processRecordingBtn = document.getElementById('process-recording-btn');
+
+// Audio and Transcript Elements
+const audioPlayerSection = document.getElementById('audio-player-section');
+const audioPlayer = document.getElementById('audio-player');
+
+// Processing Status Elements
+const processingStatus = document.getElementById('processing-status');
+const processingBar = document.getElementById('processing-bar');
+const processingPercentage = document.getElementById('processing-percentage');
+const processingStep = document.getElementById('processing-step');
+
+// File paths
+const EMAIL_FILE_PATH = 'assets/email.txt';
+const RECORDING_FILE_PATH = 'assets/recording.mp3';
+const TRANSCRIPT_FILE_PATH = 'assets/transcription.txt';
+
+// Processing Status Management
+function updateProcessingStatus(step, percentage) {
+    processingStatus.classList.remove('hidden');
+    processingBar.style.width = `${percentage}%`;
+    processingPercentage.textContent = `${percentage}%`;
+    processingStep.textContent = step;
+}
+
+function hideProcessingStatus() {
+    processingStatus.classList.add('hidden');
+    processingBar.style.width = '0%';
+    processingPercentage.textContent = '0%';
+    processingStep.textContent = '';
+}
+// Remove duplicate declarations
+
+// Copy buttons
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', async () => {
+        const targetId = button.dataset.target;
+        const content = document.getElementById(targetId).textContent;
+        try {
+            await navigator.clipboard.writeText(content);
+            const span = button.querySelector('span');
+            const originalText = span.textContent;
+            span.textContent = 'Copied!';
+            button.classList.add('text-green-600');
+            setTimeout(() => {
+                span.textContent = originalText;
+                button.classList.remove('text-green-600');
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text:', err);
+        }
+    });
+});
+
+// Content Elements
+const callPlanContent = document.getElementById('call-plan');
+const clientEmailContent = document.getElementById('client-email');
+const internalEmailContent = document.getElementById('internal-email');
+const opportunityTable = document.getElementById('opportunity-table');
+const sowDetails = document.getElementById('sow-details');
+const callMetrics = document.getElementById('call-metrics');
+const performanceAnalysis = document.getElementById('performance-analysis');
 
 // Event Listeners
-beginBtn.addEventListener('click', () => {
-    landingPage.classList.add('hidden');
-    mainApp.classList.remove('hidden');
+getStartedBtn.addEventListener('click', () => {
+    landingPage.classList.add('opacity-0');
+    landingPage.style.transition = 'opacity 0.3s ease-out';
+    setTimeout(() => {
+        landingPage.classList.add('hidden');
+        mainApp.classList.remove('hidden');
+        mainApp.classList.add('opacity-100');
+        mainApp.style.transition = 'opacity 0.3s ease-in';
+    }, 300);
 });
 
-// File upload handlers
-emailFileInput.addEventListener('change', handleFileSelect);
-audioFileInput.addEventListener('change', handleAudioTranscriptSelect);
-transcriptFileInput.addEventListener('change', handleAudioTranscriptSelect);
+// Initialize email selection
+selectEmailBtn.addEventListener('click', async () => {
+    try {
+        const response = await fetch(EMAIL_FILE_PATH);
+        if (!response.ok) throw new Error('Failed to load email file');
+        
+        const emailContent = await response.text();
+        
+        // Show success indicator
+        emailFileStatus.classList.remove('hidden');
+        
+        // Store content and enable button
+        window.emailContent = emailContent;
+        generatePlanBtn.disabled = false;
+    } catch (error) {
+        console.error('Error loading email file:', error);
+        alert('Error loading email file. Please try again.');
+    }
+});
 
-function handleFileSelect(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    emailFileName.textContent = file.name;
-    updateProcessButton();
-}
+// Initialize recording selection
+selectRecordingBtn.addEventListener('click', async () => {
+    try {
+        // Load transcript
+        const response = await fetch(TRANSCRIPT_FILE_PATH);
+        if (!response.ok) throw new Error('Failed to load transcript');
+        
+        const transcript = await response.text();
+        window.transcriptContent = transcript; // Store for later use
+        
+        // Show audio player with success indicator
+        audioPlayerSection.classList.remove('hidden');
+        processRecordingBtn.disabled = false;
 
-function handleAudioTranscriptSelect(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+        // Update tab status to show it's active
+        updateTabStatus('recording-content', true);
+    } catch (error) {
+        console.error('Error loading recording/transcript:', error);
+        alert('Error loading recording/transcript. Please try again.');
+    }
+});
 
-    // Clear the other input when one is selected
-    if (event.target.id === 'audio-file') {
-        transcriptFileInput.value = '';
-        transcriptFileName.textContent = '';
-        audioFileName.textContent = file.name;
-    } else {
-        audioFileInput.value = '';
-        audioFileName.textContent = '';
-        transcriptFileName.textContent = file.name;
+
+
+
+
+
+
+// Tab Navigation
+document.querySelectorAll('[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+        if (!tab.disabled) {
+            switchTab(tab.dataset.tab);
+        }
+    });
+});
+
+// Action Buttons
+generatePlanBtn.addEventListener('click', generateCallPlan);
+processRecordingBtn.addEventListener('click', processRecording);
+downloadCsvBtn.addEventListener('click', downloadOpportunityCSV);
+
+
+
+
+
+// Tab Management
+function switchTab(tabId) {
+    // Allow switching to recording-content tab after plan-content is complete
+    if (tabId === 'recording-content' && contentStatus['plan-content']) {
+        // This is okay - we want to allow this transition
+    } else if (!contentStatus[tabId] && tabId !== 'email-content') {
+        console.warn('Attempting to switch to tab with incomplete content:', tabId);
+        return;
     }
 
-    updateProcessButton();
+    // Hide all tabs
+    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
+    document.querySelectorAll('[data-tab]').forEach(tab => {
+        tab.classList.remove('border-blue-600', 'text-blue-600');
+        tab.classList.add('border-transparent', 'text-gray-500');
+    });
+
+    // Show selected tab
+    const selectedTab = document.getElementById(tabId);
+    const tabButton = document.querySelector(`[data-tab="${tabId}"]`);
+    
+    selectedTab.classList.remove('hidden');
+    tabButton.classList.remove('border-transparent', 'text-gray-500');
+    tabButton.classList.add('border-blue-600', 'text-blue-600');
+    
+    currentTab = tabId;
 }
 
-function updateProcessButton() {
-    const hasEmailFile = emailFileInput.files[0];
-    const hasAudioOrTranscript = audioFileInput.files[0] || transcriptFileInput.files[0];
-    processBtn.disabled = !(hasEmailFile && hasAudioOrTranscript);
+// Enable next tab in sequence
+function enableNextTab() {
+    const currentIndex = tabOrder.indexOf(currentTab);
+    if (currentIndex < tabOrder.length - 1) {
+        const nextTabId = tabOrder[currentIndex + 1];
+        const nextTab = document.querySelector(`[data-tab="${nextTabId}"]`);
+        nextTab.disabled = false;
+        switchTab(nextTabId);
+    }
 }
 
-// Process button handler
-processBtn.addEventListener('click', async () => {
+// Update tab status and visibility
+function updateTabStatus(tabId, isReady) {
+    contentStatus[tabId] = isReady;
+    const tabButton = document.querySelector(`[data-tab="${tabId}"]`);
+    const nextTabId = tabOrder[tabOrder.indexOf(tabId) + 1];
+
+    if (isReady) {
+        // Update current tab style
+        tabButton.classList.remove('text-gray-400', 'opacity-50', 'cursor-not-allowed');
+        tabButton.classList.add('text-gray-700', 'hover:text-blue-600', 'hover:border-blue-600');
+
+        // Enable next tab if exists
+        if (nextTabId) {
+            const nextTab = document.querySelector(`[data-tab="${nextTabId}"]`);
+            nextTab.disabled = false;
+            nextTab.classList.remove('text-gray-400', 'opacity-50', 'cursor-not-allowed');
+            nextTab.classList.add('text-gray-700', 'hover:text-blue-600', 'hover:border-blue-600');
+        }
+    }
+}
+
+// Global variables and constants
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXNobmEua3VtYXJAZ3JhbWVuZXIuY29tIn0.QY0QNLADfGARpZvcew8DJgrtMtdxJ8NHUn9_qnSiWEM";
+
+// Tab management
+let currentTab = 'email-content';
+const tabOrder = ['email-content', 'plan-content', 'recording-content', 'emails-content', 'opportunity-content', 'coaching-content'];
+
+// Track content readiness
+const contentStatus = {
+    'email-content': false,
+    'plan-content': false,
+    'recording-content': false,
+    'emails-content': false,
+    'opportunity-content': false,
+    'coaching-content': false
+};
+
+// Main Processing Functions
+async function generateCallPlan() {
     try {
-        const emailFile = emailFileInput.files[0];
-        const audioFile = audioFileInput.files[0];
-        const transcriptFile = transcriptFileInput.files[0];
+        generatePlanBtn.disabled = true;
+        generatePlanBtn.textContent = 'Generating...';
+        updateProcessingStatus('Loading email thread...', 10);
 
-        // Read email content
-        const emailContent = await readFileContent(emailFile);
+        // Load email content
+        const response = await fetch(EMAIL_FILE_PATH);
+        if (!response.ok) throw new Error('Failed to load email file');
+        const emailContent = await response.text();
+
+        updateProcessingStatus('Analyzing email thread...', 25);
+        const callPlanSystemPrompt = `You are an expert sales strategist. Create a detailed yet concise call plan based on the email thread. Include:
+            1. Agenda (3-5 bullet points)
+            2. Qualification hypotheses
+            3. Discovery questions grouped by: Scope, Timeline, Compliance, Budget, Decision process
+            4. Watch-outs (likely objections + competitor angles)`;
+
+        updateProcessingStatus('Generating call plan...', 50);
+        const callPlan = await callLLM(callPlanSystemPrompt, emailContent);
+        callPlanContent.innerHTML = marked.parse(callPlan);
         
-        // Get either audio base64 or transcript content
-        let audioOrTranscriptContent;
-        if (audioFile) {
-            audioOrTranscriptContent = await fileToBase64(audioFile);
-        } else if (transcriptFile) {
-            audioOrTranscriptContent = await readFileContent(transcriptFile);
+        updateProcessingStatus('Finalizing call plan...', 90);
+        // Update tab status and move to next tab
+        updateTabStatus('plan-content', true);
+        updateTabStatus('recording-content', false); // Initialize next tab
+        enableNextTab();
+        
+        hideProcessingStatus();
+
+                // Reset recording state
+        processRecordingBtn.disabled = true;
+        audioPlayerSection.classList.add('hidden');
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error generating call plan. Please try again.');
+    } finally {
+        generatePlanBtn.disabled = false;
+        generatePlanBtn.textContent = 'Generate Call Plan';
+    }
+}
+
+async function processRecording() {
+    try {
+        processRecordingBtn.disabled = true;
+        processRecordingBtn.textContent = 'Processing...';
+        updateProcessingStatus('Loading transcript...', 10);
+
+        // Load transcript
+        const response = await fetch(TRANSCRIPT_FILE_PATH);
+        if (!response.ok) throw new Error('Failed to load transcript');
+        const transcript = await response.text();
+
+        updateProcessingStatus('Analyzing transcript...', 30);
+
+        if (!transcript) {
+            throw new Error('No transcript content available');
         }
 
-        // Process the files
-        await processFiles(emailContent, audioOrTranscriptContent);
-        
-    } catch (error) {
-        console.error('Error processing files:', error);
-        alert('An error occurred while processing the files. Please try again.');
-    }
-});
+        // Show transcript in the recording tab
+        const transcriptSection = document.createElement('div');
+        transcriptSection.className = 'mt-6 bg-white p-6 rounded-lg border border-gray-200';
+        transcriptSection.innerHTML = `
+            <h3 class="text-lg font-semibold mb-4 text-blue-600">Transcript</h3>
+            <div class="prose max-w-none text-sm">${marked.parse(transcript || 'No transcript content available')}</div>
+        `;
+        document.getElementById('recording-content').appendChild(transcriptSection);
 
-// Utility functions
-function readFileContent(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (e) => reject(e);
-        reader.readAsText(file);
-    });
+        // Update recording tab status
+        updateTabStatus('recording-content', true);
+
+        updateProcessingStatus('Generating follow-up emails...', 50);
+        // Generate emails with safe content checking
+        const [clientEmail, internalEmail] = await Promise.all([
+            generateClientEmail(transcript),
+            generateInternalEmail(transcript)
+        ]);
+
+        clientEmailContent.innerHTML = marked.parse(clientEmail || 'Error generating client email');
+        internalEmailContent.innerHTML = marked.parse(internalEmail || 'Error generating internal email');
+        updateTabStatus('emails-content', true);
+        updateProcessingStatus('Processing opportunity details...', 70);
+
+        // Generate opportunity details
+        await generateOpportunityDetails(transcript);
+        updateTabStatus('opportunity-content', true);
+        updateProcessingStatus('Generating coaching feedback...', 90);
+
+        // Generate coaching feedback
+        await generateCoachingFeedback(transcript);
+        updateTabStatus('coaching-content', true);
+
+        enableNextTab();
+        hideProcessingStatus();
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error processing recording. Please try again.');
+    } finally {
+        processRecordingBtn.disabled = false;
+        processRecordingBtn.textContent = 'Process Recording';
+    }
 }
 
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result.split(',')[1]);
-        reader.onerror = (e) => reject(e);
-        reader.readAsDataURL(file);
+async function generateClientEmail(transcript) {
+    const clientEmailPrompt = "Generate a concise, professional client follow-up email based on the call transcript. Keep it focused and action-oriented.";
+    return await callLLM(clientEmailPrompt, transcript);
+}
+
+async function generateInternalEmail(transcript) {
+    const internalEmailPrompt = "Generate a concise internal team email with key action items and next steps based on the call transcript.";
+    return await callLLM(internalEmailPrompt, transcript);
+}
+
+async function generateOpportunityDetails(transcript) {
+    try {
+        // First, get opportunity details in JSON format
+        const opportunityPrompt = `Extract the following details from the call transcript and return them in this exact JSON format:
+{
+    "opportunityName": "name of the opportunity",
+    "serviceLine": "primary service line",
+    "stage": "current stage of the opportunity",
+    "amount": "deal amount with currency",
+    "closeDate": "expected close date",
+    "nextStep": "next action items",
+    "competitors": "list of competitors",
+    "keyObjections": "main objections raised",
+    "scientificArea": "scientific area or therapeutic area",
+    "tags": ["relevant", "tags", "for", "the", "opportunity"]
+}`;
+
+        updateProcessingStatus('Extracting opportunity details...', 75);
+        const opportunityResponse = await callLLM(opportunityPrompt, transcript);
+        const opportunityDetails = JSON.parse(opportunityResponse);
+        
+        // Then, get SOW details separately
+        const sowPrompt = `Based on the call transcript, provide a detailed Statement of Work (SOW) breakdown with the following sections. Format in markdown with clear headers and bullet points:
+
+# Scope
+- Indication/Therapeutic Area
+- Modality
+- Models/Species involved
+
+# Technical Details
+- Key endpoints
+- Volume requirements
+- Quality standards (GLP/GMP requirements)
+
+# Timeline
+- Project milestones
+- Start date
+- Key deliverables
+
+# Additional Specifications
+- Any specific requirements
+- Special considerations
+- Technical constraints`;
+
+        updateProcessingStatus('Generating SOW details...', 85);
+        const sowResponse = await callLLM(sowPrompt, transcript);
+
+        // Update the UI
+        updateOpportunityTable(opportunityDetails);
+        sowDetails.innerHTML = marked.parse(sowResponse);
+
+        return opportunityDetails; // Return for potential use in CSV export
+    } catch (error) {
+        console.error('Error generating opportunity details:', error);
+        sowDetails.innerHTML = marked.parse('Error generating opportunity details. Please try again.');
+        throw error;
+    }
+
+    try {
+        const details = await callLLM(opportunityPrompt, transcript);
+        
+        // Split the response into opportunity details and SOW details
+        const [opportunitySection, sowSection] = details.split('\n\n').filter(Boolean);
+        
+        // Parse opportunity details into table format
+        const opportunityDetails = opportunitySection.split('\n')
+            .filter(line => line.includes('.'))
+            .reduce((acc, line) => {
+                const [number, content] = line.split('. ');
+                const [key, value] = content.split(': ');
+                acc[key.toLowerCase().replace(/ /g, '')] = value || content;
+                return acc;
+            }, {});
+        
+        // Update table
+        updateOpportunityTable(opportunityDetails);
+        
+        // Update SOW details
+        sowDetails.innerHTML = marked.parse(sowSection || 'No SOW details available');
+    } catch (error) {
+        console.error('Error generating opportunity details:', error);
+        sowDetails.innerHTML = marked.parse('Error generating opportunity details. Please try again.');
+    }
+}
+
+async function generateCoachingFeedback(transcript) {
+    const coachingPrompt = `Analyze the call and provide feedback in the following JSON format:
+        {
+            "metrics": {
+                "talkListenRatio": "ratio",
+                "questionCoverage": "percentage",
+                "objectionHandling": "score",
+                "competitorResponses": "score",
+                "nextStepClarity": "score"
+            },
+            "analysis": {
+                "strengths": "key strengths",
+                "missedProbes": "missed opportunities",
+                "suggestedPhrasing": "improvement suggestions"
+            }
+        }`;
+
+    try {
+        const feedback = await callLLM(coachingPrompt, transcript);
+        const parsedFeedback = JSON.parse(feedback);
+        
+        // Update metrics with safe content checking
+        updateCallMetrics(parsedFeedback.metrics || {});
+        
+        // Update analysis with safe content checking
+        updatePerformanceAnalysis(parsedFeedback.analysis || {});
+    } catch (error) {
+        console.error('Error generating coaching feedback:', error);
+        callMetrics.innerHTML = '<div class="text-red-500">Error generating metrics</div>';
+        performanceAnalysis.innerHTML = '<div class="text-red-500">Error generating analysis</div>';
+    }
+}
+
+// Utility Functions
+async function fetchFileContent(path) {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Failed to load file from ${path}`);
+    return response.text();
+}
+
+function updateOpportunityTable(details) {
+    const fields = [
+        { key: 'opportunityName', label: 'Opportunity' },
+        { key: 'serviceLine', label: 'Service Line' },
+        { key: 'stage', label: 'Stage' },
+        { key: 'amount', label: 'Amount' },
+        { key: 'closeDate', label: 'Close Date' },
+        { key: 'nextStep', label: 'Next Steps' },
+        { key: 'competitors', label: 'Competitors' },
+        { key: 'keyObjections', label: 'Key Objections' },
+        { key: 'scientificArea', label: 'Scientific Area' }
+    ];
+
+    // Clear existing table
+    opportunityTable.innerHTML = '';
+
+    // Create table row
+    const row = document.createElement('tr');
+    fields.forEach(field => {
+        const td = document.createElement('td');
+        td.className = 'px-3 py-2 text-sm';
+        td.textContent = details[field.key] || 'N/A';
+        row.appendChild(td);
     });
+    opportunityTable.appendChild(row);
+
+    // Store the data for CSV export
+    window.opportunityData = {
+        fields: fields,
+        details: details
+    };
+}
+
+function updateCallMetrics(metrics) {
+    callMetrics.innerHTML = Object.entries(metrics)
+        .map(([key, value]) => `<div class="flex justify-between">
+            <span class="font-medium">${key}:</span>
+            <span>${value}</span>
+        </div>`)
+        .join('');
+}
+
+function updatePerformanceAnalysis(analysis) {
+    performanceAnalysis.innerHTML = Object.entries(analysis)
+        .map(([key, value]) => `<div class="mb-2">
+            <div class="font-medium">${key}</div>
+            <div class="text-gray-600">${value}</div>
+        </div>`)
+        .join('');
+}
+
+function downloadOpportunityCSV() {
+    if (!window.opportunityData) {
+        console.error('No opportunity data available');
+        return;
+    }
+
+    const { fields, details } = window.opportunityData;
+    
+    // Create CSV content
+    const headers = fields.map(f => f.label);
+    const values = fields.map(f => details[f.key] || 'N/A');
+    
+    let csvContent = [
+        headers.join(','),
+        values.map(v => `"${v.replace(/"/g, '""')}"`).join(',')
+    ].join('\n');
+
+    // Add SOW section if available
+    if (sowDetails.textContent) {
+        csvContent += '\n\nStatement of Work\n' + sowDetails.textContent.replace(/\n/g, ' ').replace(/,/g, ';');
+    }
+
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const fileName = `opportunity_details_${timestamp}.csv`;
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+
+    // Show success message
+    const downloadBtn = document.getElementById('download-csv');
+    const btnText = downloadBtn.textContent;
+    downloadBtn.textContent = '✓ Downloaded';
+    downloadBtn.classList.remove('bg-green-600');
+    downloadBtn.classList.add('bg-green-500');
+    
+    setTimeout(() => {
+        downloadBtn.textContent = btnText;
+        downloadBtn.classList.remove('bg-green-500');
+        downloadBtn.classList.add('bg-green-600');
+    }, 2000);
 }
 
 // Main LLM function as provided
@@ -204,62 +671,5 @@ async function callLLM(systemPrompt, userMessage) {
     } catch (error) {
         console.error(error);
         throw new Error(`API call failed: ${error.message}`);
-    }
-}
-
-// Process files and generate results
-async function processFiles(emailContent, audioOrTranscriptContent) {
-    try {
-        // Show loading state
-        processBtn.disabled = true;
-        processBtn.textContent = 'Processing...';
-
-        // 1. Get transcript (either from audio or directly from file)
-        let transcript;
-        if (audioFileInput.files[0]) {
-            const transcriptSystemPrompt = "You are an expert audio transcriber. Convert the provided audio to text accurately.";
-            transcript = await callLLM(transcriptSystemPrompt, audioOrTranscriptContent);
-        } else {
-            transcript = audioOrTranscriptContent; // This is actually the transcript content
-        }
-        document.getElementById('transcript-content').innerHTML = marked.parse(transcript);
-
-        // 2. Generate action plan based on email thread
-        const actionPlanSystemPrompt = "You are an expert business analyst. Create a detailed action plan based on the email thread.";
-        const actionPlan = await callLLM(actionPlanSystemPrompt, emailContent);
-        document.getElementById('action-plan-content').innerHTML = marked.parse(actionPlan);
-
-        // 3. Generate client email
-        const clientEmailSystemPrompt = "You are a professional business communicator. Create a client-facing email based on the action plan.";
-        const clientEmail = await callLLM(clientEmailSystemPrompt, actionPlan);
-        document.getElementById('client-email-content').innerHTML = marked.parse(clientEmail);
-
-        // 4. Generate internal team email
-        const internalEmailSystemPrompt = "You are a team lead. Create an internal team email with next steps and responsibilities.";
-        const internalEmail = await callLLM(internalEmailSystemPrompt, actionPlan);
-        document.getElementById('internal-email-content').innerHTML = marked.parse(internalEmail);
-
-        // 5. Generate conversation analysis and improvement tips
-        const reviewSystemPrompt = `You are an expert communication coach. Analyze the conversation from the transcript and provide:
-1. A brief overview of the conversation style and tone
-2. Key strengths demonstrated in the communication
-3. Specific areas for improvement
-4. Actionable tips for enhancing future conversations
-5. Best practices that could have been applied
-
-Format your response in markdown with clear headings and bullet points.`;
-        const review = await callLLM(reviewSystemPrompt, transcript);
-        document.getElementById('review-content').innerHTML = marked.parse(review);
-
-        // Show results
-        resultsSection.classList.remove('hidden');
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while processing the files. Please try again.');
-    } finally {
-        // Reset button state
-        processBtn.disabled = false;
-        processBtn.textContent = 'Process Files';
     }
 }

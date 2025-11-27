@@ -5,56 +5,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Call Pilot</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Landing Page -->
-    <div id="landing-page" class="container mx-auto px-4 py-12">
-        <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-8">
-            <div class="text-center mb-12">
-                <h1 class="text-5xl font-bold text-blue-600 mb-6">Communication Intelligence Hub</h1>
-                <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">
-                    Elevate your client communications with AI-powered conversation intelligence
+    <div id="landing-page" class="min-h-screen flex items-center justify-center px-4 opacity-100 transition-opacity duration-300">
+        <div class="max-w-4xl w-full bg-white rounded-xl shadow-lg p-8">
+            <div class="text-center space-y-6">
+                <h1 class="text-5xl font-bold text-blue-600">Call Pilot</h1>
+                <p class="text-xl text-gray-600">
+                    Transform your client communications with AI-powered intelligence
                 </p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-comments text-3xl"></i>
+                <div class="grid md:grid-cols-2 gap-6 mt-12 max-w-3xl mx-auto text-left">
+                    <div class="p-6 bg-blue-50 rounded-lg border border-blue-100">
+                        <i class="fas fa-comments text-2xl text-blue-600 mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-2">Smart Analysis</h3>
+                        <p class="text-gray-600">Convert email threads and call recordings into actionable insights</p>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Smart Communication Analysis</h3>
-                    <p class="text-gray-600">Transform email threads and voice notes into actionable insights with our advanced AI analysis.</p>
+                    <div class="p-6 bg-blue-50 rounded-lg border border-blue-100">
+                        <i class="fas fa-tasks text-2xl text-blue-600 mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-2">Detailed Planning</h3>
+                        <p class="text-gray-600">Generate comprehensive call plans and follow-up actions</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 rounded-lg border border-blue-100">
+                        <i class="fas fa-chart-line text-2xl text-blue-600 mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-2">Performance Insights</h3>
+                        <p class="text-gray-600">Get detailed coaching feedback and improvement suggestions</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 rounded-lg border border-blue-100">
+                        <i class="fas fa-file-contract text-2xl text-blue-600 mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-2">Opportunity Tracking</h3>
+                        <p class="text-gray-600">Track deals and generate SOW details automatically</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-tasks text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Automated Action Plans</h3>
-                    <p class="text-gray-600">Generate comprehensive action plans and professional email responses instantly.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-chart-line text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Performance Insights</h3>
-                    <p class="text-gray-600">Get personalized feedback and tips to improve your communication effectiveness.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-sync text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Streamlined Workflow</h3>
-                    <p class="text-gray-600">Seamlessly coordinate between client and internal team communications.</p>
+                <div class="mt-12">
+                    <button id="get-started-btn" class="bg-blue-600 text-white px-12 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-transform">
+                        Get Started
+                    </button>
                 </div>
             </div>
-            <div class="text-center mt-8 mx-auto block">
-                <button id="begin-btn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors ">
-                    Begin
-                </button>
-            </div>
+        </div>
+    </div>
+            
+
         </div>
     </div>
 
     <!-- Main App (Initially Hidden) -->
+    <div id="main-app" class="min-h-screen bg-gray-50 hidden">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <!-- Header Section -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-blue-600 mb-4">Call Pilot</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-2">
+                    Transform your client communications with AI-powered intelligence
+                </p>
+                <p class="text-gray-500 max-w-2xl mx-auto">
+                    Upload your email thread and call recording to generate comprehensive insights and action plans
+                </p>
+            </div>
+
+            <!-- Processing Status -->
+            <div id="processing-status" class="max-w-2xl mx-auto mb-8 hidden">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-gray-700">Processing Status</h3>
+                        <span id="processing-percentage" class="text-sm font-medium text-blue-600">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="processing-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <div id="processing-step" class="mt-2 text-sm text-gray-500"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+                    <h2 class="text-xl font-semibold text-white">Workflow Progress</h2>
+                </div>
+            
+            <!-- Tabs Navigation -->
+                <div class="border-b border-gray-200 bg-gray-50">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium" id="tabs">
+                        <div class="px-4 py-2 text-xs text-gray-500">Progress:</div>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-blue-600 text-blue-600 font-medium group relative" id="email-tab" data-tab="email-content" aria-selected="true">
+                                <i class="fas fa-envelope mr-2"></i>1. Email Upload
+                                <span class="hidden group-hover:block absolute -bottom-8 left-0 right-0 text-xs text-gray-500">Upload email thread</span>
+                            </button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 group relative" id="plan-tab" data-tab="plan-content" disabled>
+                                <i class="fas fa-tasks mr-2"></i>2. Call Plan
+                                <span class="hidden group-hover:block absolute -bottom-8 left-0 right-0 text-xs text-gray-500">Generate call plan</span>
+                            </button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent text-gray-400 opacity-50 cursor-not-allowed group relative" id="recording-tab" data-tab="recording-content" disabled>
+                                <i class="fas fa-microphone mr-2"></i>3. Call Recording
+                                <span class="hidden group-hover:block absolute -bottom-8 left-0 right-0 text-xs text-gray-500">Upload recording/transcript</span>
+                            </button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent text-gray-400 opacity-50 cursor-not-allowed group relative" id="emails-tab" data-tab="emails-content" disabled>
+                                <i class="fas fa-paper-plane mr-2"></i>4. Follow-up Emails
+                                <span class="hidden group-hover:block absolute -bottom-8 left-0 right-0 text-xs text-gray-500">View generated emails</span>
+                            </button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent text-gray-400 opacity-50 cursor-not-allowed group relative" id="opportunity-tab" data-tab="opportunity-content" disabled>
+                                <i class="fas fa-chart-pie mr-2"></i>5. Opportunity Details
+                                <span class="hidden group-hover:block absolute -bottom-8 left-0 right-0 text-xs text-gray-500">View opportunity info</span>
+                            </button>
+                    </li>
+                    <li role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent text-gray-400 opacity-50 cursor-not-allowed group relative" id="coaching-tab" data-tab="coaching-content" disabled>
+                                <i class="fas fa-graduation-cap mr-2"></i>6. Coaching
+                                <span class="hidden group-hover:block absolute -bottom-8 left-0 right-0 text-xs text-gray-500">View coaching feedback</span>
+                            </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tab Contents -->
+                <div class="tab-content p-6">
+                    <!-- Email Upload Tab -->
+                    <div id="email-content" class="tab-pane active">
+                    <div class="max-w-md mx-auto text-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
+                        <div class="flex flex-col items-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-file-alt text-3xl text-blue-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">Email Thread</h3>
+                            <p class="text-sm text-gray-500 mb-4">Select the email thread to generate call plan</p>
+                            <div id="email-file-status" class="text-gray-600 mb-4 hidden">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span>Email file selected</span>
+                                </div>
+                            </div>
+                            <button id="select-email-btn" class="bg-blue-100 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-200 transition-colors mb-4">
+                                <i class="fas fa-file-import mr-2"></i>Select File
+                            </button>
+                            <button id="generate-plan-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400" disabled>
+                                Generate Call Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call Plan Tab -->
+                <div id="plan-content" class="tab-pane hidden">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold mb-6 text-blue-600">Call Plan</h3>
+                        <div id="call-plan" class="space-y-6">
+                            <div class="animate-pulse space-y-4">
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call Recording Tab -->
+                <div id="recording-content" class="tab-pane hidden">
+                    <div class="max-w-md mx-auto text-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
+                        <div class="flex flex-col items-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-microphone text-3xl text-blue-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">Call Recording</h3>
+                            <p class="text-sm text-gray-500 mb-4">Process the call recording to generate insights</p>
+                            
+                            <!-- Audio Player Section (Initially Hidden) -->
+                            <div id="audio-player-section" class="w-full mb-4 hidden">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-sm text-gray-500">recording.mp3</div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                                        <span class="text-sm text-gray-600">Audio loaded</span>
+                                    </div>
+                                </div>
+                                <audio id="audio-player" controls class="w-full">
+                                    <source src="assets/recording.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+
+                            <button id="select-recording-btn" class="bg-blue-100 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-200 transition-colors mb-4">
+                                <i class="fas fa-file-audio mr-2"></i>Select Recording
+                            </button>
+                            <button id="process-recording-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400" disabled>
+                                Process Recording
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emails Tab -->
+                <div id="emails-content" class="tab-pane hidden">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-blue-600">Client Email</h3>
+                                <button class="copy-btn text-blue-600 hover:text-blue-800 flex items-center gap-2" data-target="client-email">
+                                    <i class="fas fa-copy"></i>
+                                    <span class="text-sm">Copy</span>
+                                </button>
+                            </div>
+                            <div id="client-email" class="prose max-w-none text-sm"></div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-blue-600">Internal Email</h3>
+                                <button class="copy-btn text-blue-600 hover:text-blue-800 flex items-center gap-2" data-target="internal-email">
+                                    <i class="fas fa-copy"></i>
+                                    <span class="text-sm">Copy</span>
+                                </button>
+                            </div>
+                            <div id="internal-email" class="prose max-w-none text-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opportunity Details Tab -->
+                <div id="opportunity-content" class="tab-pane hidden">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold text-blue-600">Opportunity Details</h3>
+                            <button id="download-csv" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors text-sm">
+                                Download CSV
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Opportunity Name</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Service Line</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Stage</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Close Date</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Next Step</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Competitors</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Objections</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="opportunity-table" class="bg-white divide-y divide-gray-200 text-sm"></tbody>
+                            </table>
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-semibold mb-4 text-blue-600">SOW Details</h3>
+                            <div id="sow-details" class="prose max-w-none text-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coaching Tab -->
+                <div id="coaching-content" class="tab-pane hidden">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-semibold mb-6 text-blue-600">Coaching & Feedback</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-medium mb-3">Call Metrics</h4>
+                                <div id="call-metrics" class="space-y-2 text-sm"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-3">Performance Analysis</h4>
+                                <div id="performance-analysis" class="space-y-2 text-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="main-app" class="container mx-auto px-4 py-12 hidden">
         <div class="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
             <div class="text-center mb-12">
