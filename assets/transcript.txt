@@ -1,8 +1,8 @@
-[00:00] CRL Rep (Maya Patel): Hi Dr. Chen, thanks for taking the discovery call today. I know you are also looking at WuXi and Labcorp, so my goal is to get crisp on scope, timeline, and where CRL can be most helpful for NC-217. Sound good?
+[00:00] Maya: Hi Dr. Chen, thanks for taking the discovery call today. I know you have Wuxi and Labcorp in the mix, so my goal is to make it really easy to see where CRL fits – in terms of models, biomarkers, timeline, and where CRL can be most helpful for NC-217. Sound good?
 
-[00:15] Client (Dr. Li Chen, VP Translational Science, NovaCura Biotech): Yes, that works. We are moving quickly, so I want to make sure you can hit the window.
+[00:15] Dr. Chen: Yes, that works. We are moving quickly, so I want to make sure you can hit the window.
 
-[00:24] Maya: Great. Let me start by confirming what you sent over email. NC-217 is a small-molecule oncology candidate in late lead optimization. You want two xenograft efficacy models, colorectal plus a PD-L1 high lung model, with pERK and Ki-67 biomarkers. First readouts in 6 to 8 weeks for an end-of-January go/no-go tied to IND in early Q2. Optional non-GLP rat DRF in parallel if feasible. Budget expectation 250k to 300k for efficacy. Is that all correct?
+[00:24] Maya: Great. Let me start by confirming what you sent over so we are aligned. This is a small-molecule oncology program, NC-217, late lead optimization. You are planning two xenograft efficacy models – a colorectal model, HCT116 subcutaneous, and a PD-L1 high lung model – plus pERK and Ki-67 as pharmacodynamic biomarkers with IHC and image analysis. There is also an optional non-GLP rat DRF you may want to run in parallel to get exposure and tolerability ahead of GLP. You are targeting first readouts in 6 to 8 weeks to make an end-of-January go/no-go for your IND in early Q2. You have other CROs in the mix, specifically Wuxi and Labcorp, but you have some concerns on consistency and timeline. And budget expectation is 250k to 300k for efficacy. Is that all correct?
 
 [00:55] Dr. Chen: Yes, that captures it.
 
@@ -10,27 +10,27 @@
 
 [01:08] Dr. Chen: From compound receipt. We need tumor curves early enough to decide by the end of January. If we slip, the IND plan slips.
 
-[01:20] Maya: Understood. That is a clear urgency driver. You mentioned batch release Friday and shipment early next week. If we receive compound next week, we can usually start model prep immediately, and get animals on study about two weeks from receipt, subject to scheduling. That keeps you inside the 6 to 8 week readout window. Does mid-December study start work for your gate?
+[01:20] Maya: Understood. That is a clear urgency driver. You mentioned the batch is releasing this Friday, and you can ship early next week. On our side, we can typically get animals on study within about two weeks of compound receipt, assuming we lock protocol details quickly. That would put first tumor readouts roughly in your 6 to 8 week window. Does mid-December study start work for your gate?
 
 [01:47] Dr. Chen: Yes, but we need a firm start date. Our COO Jenna will want that before signing off.
 
-[01:56] Maya: Noted. We will give you a Gantt-level timeline in the proposal. Now on models. For colorectal, you said you have used a specific xenograft before. Which line and implantation approach are you tied to?
+[01:56] Maya: Noted. We will give you a Gantt-level timeline in the proposal with a specific first-dose date and readout window, so you can take that to Jenna. Let me go one level deeper on the models. You said you have used the HCT116 model before. Which line and implantation approach are you tied to?
 
 [02:11] Dr. Chen: We used the HCT116 subcutaneous model, standard implantation. We can share the protocol and prior report.
 
-[02:21] Maya: Great. We have that in-house, so matching your historical protocol should be straightforward. For the PD-L1 high lung model, which one are you leaning toward?
+[02:21] Maya: Great. We have that in-house, so matching your historical model will be straightforward. For the PD-L1 high lung model, which one are you leaning toward?
 
-[02:34] Dr. Chen: We are leaning toward a PD-L1 high A549 variant. We have less internal experience there, and we have seen variability in implantation with a prior CRO.
+[02:34] Dr. Chen: We are leaning toward a PD-L1 high A549 variant. Your team mentioned you have used an A549 PD-L1 high model with another client. Our concern is that we have seen variability in implantation with a prior CRO.
 
-[02:49] Maya: Thanks, that is important. We can talk through our implantation QC. We track take-rate and tumor size distribution before randomization, and we can share historical ranges. If take-rate is a concern, we will build a contingency for extra animals. Would that address your consistency risk?
+[02:49] Maya: Thanks, that is important. We can talk through how we manage that. For A549 PD-L1 high, we typically over-enroll at implant and use strict tumor take criteria, with pre-randomization culling if tumors do not reach threshold volume. We also run historical QC on take rate and growth curves. If we proceed, we can include an implantation quality control figure in the report and build in contingency for extra animals. Would that address your consistency risk?
 
 [03:12] Dr. Chen: Yes, assuming you can show data.
 
-[03:15] Maya: We will include that. Study design wise, you said 3 arms per model, 8 to 10 animals per arm. Vehicle, low, high. Any thoughts yet on dose levels?
+[03:15] Maya: We will include that. Study design-wise, you said two models, three arms per model, 8 to 10 animals per arm. Vehicle, low, high. Any thoughts yet on dose levels?
 
-[03:28] Dr. Chen: We are still finalizing. We have a workable oral formulation at 10 mg/mL. Likely two doses bracketed around our in vitro IC50 exposure, but we will confirm after stability is finalized.
+[03:28] Dr. Chen: We are still finalizing. We have a workable exposure target from our PK, and we know we want to bracket around the in vitro IC50 exposure, but we will confirm after stability is finalized.
 
-[03:46] Maya: Great. We will draft the plan with placeholders and lock doses once we see your prior PK and stability notes. On endpoints: tumor growth inhibition is primary. Biomarkers pERK and Ki-67, with IHC and image analysis on your behalf. Anything else?
+[03:46] Maya: Great. We will draft the plan with placeholders for low and high dose levels, tied to your exposure targets. For biomarkers, you mentioned pERK and Ki-67, with IHC and image analysis on your behalf. Anything else?
 
 [04:06] Dr. Chen: We would like tissue banking for future RNA-seq if it is easy to add. Not mandatory.
 
@@ -38,49 +38,38 @@
 
 [04:20] Dr. Chen: Weekly interim curves would be ideal.
 
-[04:24] Maya: Done. Now, on early safety. You mentioned a short non-GLP rat DRF in parallel, mostly to satisfy the board and derisk before GLP tox. Can you say more about what they want to see?
+[04:24] Maya: Done. We will build in weekly interim tumor volume updates for both models. Now, on the DRF – you mentioned it is optional but would be helpful to de-risk GLP. Can you share where you are on that decision?
 
-[04:41] Dr. Chen: A 7-day tolerability readout with basic clinical observations and exposure. Not GLP. If efficacy is weak we will stop, so we do not want to over-invest yet.
+[04:38] Dr. Chen: We are leaning toward doing a short non-GLP DRF in rat. Probably once daily oral dosing for 7 days. We mainly need tolerability and exposure to confirm that the GLP design is reasonable. But we are budget-sensitive.
 
-[04:56] Maya: Makes sense. We can run a non-GLP 7-day DRF in rat through our DSA group, starting parallel to efficacy if scheduling allows. We will also align endpoints so you can roll into GLP tox later without rework. Is formal GLP tox still a March decision depending on January efficacy?
+[04:56] Maya: Understood. A non-GLP 7-day rat DRF is very standard for us. What we typically do is run it with a limited number of animals per sex per group, just enough to get a read on MTD, gross tolerability, and exposure. Then you can decide whether to expand in GLP. If we run DRF in parallel with the efficacy, you would have readouts in a similar window. Does that parallel run add value for you?
 
-[05:18] Dr. Chen: Yes, likely March if January data is positive.
+[05:19] Dr. Chen: Yes, as long as it does not push out the efficacy start. The main thing is that we do not want tox to become the bottleneck.
 
-[05:23] Maya: Great. That gives a clean roadmap. Let me ask about decision process. You said in email it is you and COO Jenna making the call, with procurement after selection. Is Jenna going to want a joint review?
+[05:28] Maya: Makes sense. What I suggest is that we treat the DRF as a modular add-on in the proposal. We will show scenario A, efficacy plus biomarkers only, and scenario B, efficacy plus biomarkers plus parallel DRF. That way you and Jenna can see the incremental cost and decide. For GLP, if DRF looks clean, we can slot you into a Q1 window without having to re-work the design.
 
-[05:39] Dr. Chen: Yes. She will review pricing and timeline with me. She will want to know why CRL over WuXi if we go single partner.
+[05:51] Dr. Chen: That would be helpful.
 
-[05:52] Maya: Understood. We will make that comparison easy. Speaking of competitors, you said WuXi and Labcorp are in the mix. Any specific concerns with them, or is it mostly cost and speed?
+[05:54] Maya: Great. Let me summarize what you are solving for, just to be sure we have it right. You need: one, clean efficacy data in two relevant models, with pERK and Ki-67 biomarkers, to make an end-of-January go/no-go on the IND. Two, a clear path to GLP tox that does not bottleneck your IND. And three, confidence in timeline and implantation consistency so you do not run into the issues you saw with the prior CRO.
 
-[06:07] Dr. Chen: WuXi is fast and cost-competitive, but we had variability in tumor implantation quality last time. Labcorp feels strong on tox, less on these specific efficacy models.
+[06:20] Dr. Chen: Yes, exactly.
 
-[06:25] Maya: Helpful. We will emphasize implantation QC and model reproducibility, and the value of a single partner across RMS efficacy and DSA DRF, so you do not have to coordinate two CROs. On pricing: you flagged 250k to 300k as a target for the two efficacy models including biomarkers. If we are above that, is there any flexibility?
+[06:23] Maya: Perfect. Let us talk next steps. You asked for a proposal by Thursday. If we send it by Thursday afternoon, can Jenna review Friday morning?
 
-[06:54] Dr. Chen: Limited. If it is meaningfully higher, we will need justification, or we will split vendors.
+[06:34] Dr. Chen: Yes, she reviews everything Friday mornings.
 
-[07:02] Maya: Clear. We will aim to be in range and show what is included. I will also structure two scenarios: efficacy only, and efficacy plus parallel DRF, so you can decide based on budget.
+[06:37] Maya: Great. And would you be open to a 30-minute technical scoping call next week with our discovery biology lead and our DSA tox lead? That way we can lock down dose levels, biomarkers, and DRF design upfront.
 
-[07:18] Dr. Chen: That would help.
+[06:50] Dr. Chen: Yes, Tuesday morning works.
 
-[07:20] Maya: Let me check for any gaps we should close today. I need your historical colorectal protocol and prior report, plus any preliminary PK rationale for dose selection. You said you can send those by tomorrow?
+[06:53] Maya: Perfect. Before we close, anything else you want to make sure we capture?
 
-[07:36] Dr. Chen: Yes, my scientist will send protocol and report tomorrow. PK summary can go with it. Stability data may follow early next week.
+[06:59] Dr. Chen: No, this covers everything. Just make sure the timeline is firm.
 
-[07:50] Maya: Perfect. With that, here are next steps:
+[07:03] Maya: Understood. We will anchor a firm first-dose date and readout schedule in the proposal.
 
-1. You send protocol, prior report, and PK summary tomorrow, stability notes early next week.
-2. We send a proposal with timeline and pricing by Thursday, covering both scenarios (efficacy only vs efficacy + DRF).
-3. If the proposal looks good, we schedule a 30-minute technical scoping call early next week with our discovery biology lead and DSA tox lead to lock models and endpoints.
-   Does that align with your internal timing?
+[07:10] Dr. Chen: Great.
 
-[08:28] Dr. Chen: Yes. If I have your proposal by Thursday, I can review with Jenna on Friday morning. Then we can decide next week.
+[07:13] Maya: Thanks again, Dr. Chen. We will send the proposal Thursday and hold Tuesday morning for the technical call.
 
-[08:40] Maya: Great. I will tentatively hold Tuesday at 11:00 AM ET for the technical scoping, pending your review. Anything else you want us to consider?
-
-[08:53] Dr. Chen: Just make sure the lung model consistency risk is addressed, and that the timeline is firm.
-
-[09:01] Maya: Absolutely. We will include implantation QC data and a contingency plan, and we will commit to a start date based on compound arrival. Thanks, Dr. Chen. I will send a short recap email today and the proposal Thursday.
-
-[09:18] Dr. Chen: Thanks, Maya. Talk soon.
-
-[09:21] Maya: Talk soon.
+[07:20] Dr. Chen: Sounds good. Talk soon.
