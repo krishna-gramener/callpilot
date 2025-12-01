@@ -99,7 +99,7 @@ const processingStep = document.getElementById('processing-step');
 // File paths
 const EMAIL_FILE_PATH = 'assets/email.txt';
 const RECORDING_FILE_PATH = 'assets/recording.mp3';
-const TRANSCRIPT_FILE_PATH = 'assets/transcription.txt';
+const TRANSCRIPT_FILE_PATH = 'assets/transcript.txt';
 
 // Processing Status Management
 function updateProcessingStatus(step, percentage) {
@@ -182,14 +182,7 @@ selectEmailBtn.addEventListener('click', async () => {
 // Initialize recording selection
 selectRecordingBtn.addEventListener('click', async () => {
     try {
-        // Load transcript
-        const response = await fetch(TRANSCRIPT_FILE_PATH);
-        if (!response.ok) throw new Error('Failed to load transcript');
-        
-        const transcript = await response.text();
-        window.transcriptContent = transcript; // Store for later use
-        
-        // Show audio player with success indicator
+        // Show audio player and transcript
         audioPlayerSection.classList.remove('hidden');
         processRecordingBtn.disabled = false;
 
@@ -200,12 +193,6 @@ selectRecordingBtn.addEventListener('click', async () => {
         alert('Error loading recording/transcript. Please try again.');
     }
 });
-
-
-
-
-
-
 
 // Tab Navigation
 document.querySelectorAll('[data-tab]').forEach(tab => {
@@ -285,9 +272,6 @@ function updateTabStatus(tabId, isReady) {
     }
 }
 
-// Global variables and constants
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXNobmEua3VtYXJAZ3JhbWVuZXIuY29tIn0.QY0QNLADfGARpZvcew8DJgrtMtdxJ8NHUn9_qnSiWEM";
-
 // Tab management
 let currentTab = 'email-content';
 const tabOrder = ['email-content', 'plan-content', 'recording-content', 'emails-content', 'opportunity-content', 'coaching-content'];
@@ -356,8 +340,13 @@ async function processRecording() {
         const response = await fetch(TRANSCRIPT_FILE_PATH);
         if (!response.ok) throw new Error('Failed to load transcript');
         const transcript = await response.text();
-
+        window.transcriptContent = transcript; // Store for later use
+        
         updateProcessingStatus('Analyzing transcript...', 30);
+        // Format and display transcript
+        const transcriptHtml = `<div class="p-4 text-gray-600 whitespace-pre-wrap font-mono">${transcript}</div>`;
+
+        
 
         if (!transcript) {
             throw new Error('No transcript content available');
@@ -366,10 +355,7 @@ async function processRecording() {
         // Show transcript in the recording tab
         const transcriptSection = document.createElement('div');
         transcriptSection.className = 'mt-6 bg-white p-6 rounded-lg border border-gray-200';
-        transcriptSection.innerHTML = `
-            <h3 class="text-lg font-semibold mb-4 text-blue-600">Transcript</h3>
-            <div class="prose max-w-none text-sm">${marked.parse(transcript || 'No transcript content available')}</div>
-        `;
+        transcriptSection.innerHTML = transcriptHtml
         document.getElementById('recording-content').appendChild(transcriptSection);
 
         // Update recording tab status
@@ -476,31 +462,6 @@ async function generateOpportunityDetails(transcript) {
         throw error;
     }
 
-    try {
-        const details = await callLLM(opportunityPrompt, transcript);
-        
-        // Split the response into opportunity details and SOW details
-        const [opportunitySection, sowSection] = details.split('\n\n').filter(Boolean);
-        
-        // Parse opportunity details into table format
-        const opportunityDetails = opportunitySection.split('\n')
-            .filter(line => line.includes('.'))
-            .reduce((acc, line) => {
-                const [number, content] = line.split('. ');
-                const [key, value] = content.split(': ');
-                acc[key.toLowerCase().replace(/ /g, '')] = value || content;
-                return acc;
-            }, {});
-        
-        // Update table
-        updateOpportunityTable(opportunityDetails);
-        
-        // Update SOW details
-        sowDetails.innerHTML = marked.parse(sowSection || 'No SOW details available');
-    } catch (error) {
-        console.error('Error generating opportunity details:', error);
-        sowDetails.innerHTML = marked.parse('Error generating opportunity details. Please try again.');
-    }
 }
 
 async function generateCoachingFeedback(transcript) {
@@ -576,20 +537,29 @@ function updateOpportunityTable(details) {
     };
 }
 
+function formatKey(key) {
+    // Convert camelCase or snake_case to Title Case with spaces
+    return key
+        .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+        .replace(/_/g, ' ') // Replace underscores with spaces
+        .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
+        .trim();
+}
+
 function updateCallMetrics(metrics) {
     callMetrics.innerHTML = Object.entries(metrics)
-        .map(([key, value]) => `<div class="flex justify-between">
-            <span class="font-medium">${key}:</span>
-            <span>${value}</span>
+        .map(([key, value]) => `<div class="flex justify-between p-2 border-b border-gray-100 last:border-0">
+            <span class="font-medium text-gray-700">${formatKey(key)}:</span>
+            <span class="text-gray-600">${value}</span>
         </div>`)
         .join('');
 }
 
 function updatePerformanceAnalysis(analysis) {
     performanceAnalysis.innerHTML = Object.entries(analysis)
-        .map(([key, value]) => `<div class="mb-2">
-            <div class="font-medium">${key}</div>
-            <div class="text-gray-600">${value}</div>
+        .map(([key, value]) => `<div class="p-3 border-b border-gray-100 last:border-0 hover:bg-gray-50">
+            <div class="font-medium text-gray-900 mb-1">${formatKey(key)}</div>
+            <div class="text-gray-600 text-sm">${value}</div>
         </div>`)
         .join('');
 }
