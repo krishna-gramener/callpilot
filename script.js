@@ -400,7 +400,8 @@ async function generateClientEmail(transcript) {
 }
 
 async function generateInternalEmail(transcript) {
-    const internalEmailPrompt = "Generate a concise internal team email with key action items and next steps based on the call transcript.";
+    const internalEmailPrompt = "Generate a concise internal team email with key action items and next steps based on the call transcript. Make sure the email is not very verbose and imp points are in bullet points format, heading should be in bold , proper case formatting etc";
+
     return await callLLM(internalEmailPrompt, transcript);
 }
 
@@ -479,7 +480,9 @@ async function generateCoachingFeedback(transcript) {
                 "missedProbes": "missed opportunities",
                 "suggestedPhrasing": "improvement suggestions"
             }
-        }`;
+        }
+            
+        the content provided in analysis i.e strength, missed opportunities, improvement suggestions should be in markdown format and bold key terms in content`;
 
     try {
         const feedback = await callLLM(coachingPrompt, transcript);
@@ -559,7 +562,7 @@ function updatePerformanceAnalysis(analysis) {
     performanceAnalysis.innerHTML = Object.entries(analysis)
         .map(([key, value]) => `<div class="p-3 border-b border-gray-100 last:border-0 hover:bg-gray-50">
             <div class="font-medium text-gray-900 mb-1">${formatKey(key)}</div>
-            <div class="text-gray-600 text-sm">${value}</div>
+            <div class="text-gray-600 text-sm">${marked.parse(value)}</div>
         </div>`)
         .join('');
 }
